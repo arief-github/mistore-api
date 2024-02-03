@@ -102,7 +102,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|unique:products,title'.$product->id,
+            'title' => 'required|unique:products,title,'.$product->id,
             'category_id' => 'required',
             'description' => 'required',
             'weight' => 'required',
@@ -132,31 +132,32 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
                 'user_id' => auth()->guard('api_admin')->user()->id,
                 'description' => $request->description,
+                'weight' => $request->weight,
                 'price' => $request->price,
                 'stock' => $request->stock,
                 'discount' => $request->discount
             ]);
-
-            // update product without image
-            $product->update([
-                'title' => $request->title,
-                'slug' => Str::slug($request->title, '-'),
-                'category_id' => $request->category_id,
-                'user_id' => auth()->guard('api_admin')->user()->id,
-                'description' => $request->description,
-                'price' => $request->price,
-                'stock' => $request->stock,
-                'discount' => $request->discount
-            ]);
-
-            if(!$product) {
-                // return failed with api resource
-                return new ProductResource(false, "Data Product Gagal Diupdate!", null);
-            }
-
-            return new ProductResource(true, 'Data Product Berhasil Diupdate!', $product);
-
         }
+
+        // update product without image
+        $product->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title, '-'),
+            'category_id' => $request->category_id,
+            'user_id' => auth()->guard('api_admin')->user()->id,
+            'description' => $request->description,
+            'weight' => $request->weight,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'discount' => $request->discount
+        ]);
+
+        if(!$product) {
+            // return failed with api resource
+            return new ProductResource(false, "Data Product Gagal Diupdate!", null);
+        }
+
+        return new ProductResource(true, 'Data Product Berhasil Diupdate!', $product);
     }
 
     /**
