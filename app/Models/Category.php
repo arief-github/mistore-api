@@ -13,26 +13,26 @@ class Category extends Model
 
       /**
      * Relationship Category to Products is One to Many (Inverse)
-     * 
+     *
      * it means 1 category can have many products
-     * 
+     *
      */
 
     public function products()
     {
         return $this->hasMany(Product::class);
-    } 
+    }
 
     /**
      * getImageAttribute
-     * 
+     *
      * @param mixed $image
-     * @return void
+     * @return string
      *
      */
 
-     public function getImageAttribute($image)
-     {
-        return asset('storage/categories'. $image);
-     }
+    public function getImageAttribute($image)
+    {
+        return asset('storage/categories/' . $image);
+    }
 }
