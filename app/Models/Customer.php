@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Customer extends Authenticable implements JWTSubject
 {
     use HasFactory;
 
     /**
      * fillable
-     * 
+     *
      * @var array
      */
 
@@ -31,7 +33,7 @@ class Customer extends Model
 
     /**
      * getCreatedAtAttribute
-     * 
+     *
      * @param mixed $date
      * @return void
      *
@@ -41,5 +43,24 @@ class Customer extends Model
         $value = Carbon::parse($date);
         $parse = $value->locale('id');
         return $parse->translatedFormat('l, d F Y');
+     }
+
+     /**
+      * get the identifier that will be stored in the subject claim of JWT
+      */
+
+     public function getJWTIdentifier()
+     {
+         // TODO: Implement getJWTIdentifier() method.
+         return $this->getKey();
+     }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT
+     * @return array
+     */
+     public function getJWTCustomClaims()
+     {
+         return [];
      }
 }

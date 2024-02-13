@@ -19,6 +19,26 @@ Route::prefix('web')->group(function() {
     Route::apiResource('/categories', App\Http\Controllers\Api\Web\CategoryController::class,['except' => ['create', 'store', 'edit','update', 'destroy'], 'as' => 'web']);
 });
 
+Route::prefix('customer')->group(function() {
+    // route register
+    Route::post('/register', [App\Http\Controllers\Api\Customer\RegisterController::class, 'store', ['as' => 'customer']]);
+
+    // route login
+    Route::post('/login', [App\Http\Controllers\Api\Customer\LoginController::class, 'index', ['as' => 'customer']]);
+
+    // group route with middleware "auth:api_customers"
+    Route::group(['middleware' => 'auth:api_customer'], function() {
+        // data user/customer
+        Route::get('/user', [App\Http\Controllers\Api\Customer\LoginController::class, 'getUser',['as' => 'customer']]);
+
+        //refresh JWT token
+        Route::post('/refresh', [App\Http\Controllers\Api\Customer\LoginController::class, 'refreshToken', ['as' => 'customer']]);
+
+        // logout
+        Route::post('/logout', [App\Http\Controllers\Api\Customer\LoginController::class, 'logout', ['as' => 'customer']]);
+    });
+});
+
 Route::prefix("admin")->group(function () {
     // route login
     Route::post("/login", [App\Http\Controllers\Api\Admin\LoginController::class, 'index', ['as' => 'admin']]);
