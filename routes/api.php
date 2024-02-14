@@ -32,7 +32,7 @@ Route::prefix('customer')->group(function() {
         Route::get('/user', [App\Http\Controllers\Api\Customer\LoginController::class, 'getUser',['as' => 'customer']]);
 
         //refresh JWT token
-        Route::post('/refresh', [App\Http\Controllers\Api\Customer\LoginController::class, 'refreshToken', ['as' => 'customer']]);
+        Route::get('/refresh', [App\Http\Controllers\Api\Customer\LoginController::class, 'refreshToken', ['as' => 'customer']]);
 
         // logout
         Route::post('/logout', [App\Http\Controllers\Api\Customer\LoginController::class, 'logout', ['as' => 'customer']]);
@@ -52,7 +52,7 @@ Route::prefix("admin")->group(function () {
         Route::get('/refresh', [App\Http\Controllers\Api\Admin\LoginController::class,'refreshToken', ['as' => 'admin']]);
 
         //logout
-        Route::get('/logout', [App\Http\Controllers\Api\Admin\LoginController::class,'logout', ['as' => 'admin']]);
+        Route::post('/logout', [App\Http\Controllers\Api\Admin\LoginController::class,'logout', ['as' => 'admin']]);
 
         Route::get('/dashboard', [App\Http\Controllers\Api\Admin\DashboardController::class, 'index', ['as' => 'admin']]);
 
@@ -67,5 +67,8 @@ Route::prefix("admin")->group(function () {
 
         // CRD Sliders
         Route::apiResource('/sliders', App\Http\Controllers\Api\Admin\SliderController::class, ['except' => ['create', 'show', 'edit', 'update'], 'as' => 'admin']);
+
+        // read customers
+        Route::get('/customers', [App\Http\Controllers\Api\Admin\CustomerController::class, 'index', ['as' => 'admin']]);
     });
 });
