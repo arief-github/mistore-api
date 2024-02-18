@@ -36,6 +36,9 @@ Route::prefix('customer')->group(function() {
 
         // logout
         Route::post('/logout', [App\Http\Controllers\Api\Customer\LoginController::class, 'logout', ['as' => 'customer']]);
+
+        // Dashboard
+        Route::get('/dashboard', [App\Http\Controllers\Api\Customer\DashboardController::class, 'index', ['as' => 'customer']]);
     });
 });
 
