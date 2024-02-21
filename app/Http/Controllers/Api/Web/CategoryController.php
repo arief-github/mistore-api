@@ -30,10 +30,7 @@ class CategoryController extends Controller
     {
         $category = Category::with('products.category')
             // get count review and average review
-            ->with('products', function($query) {
-                $query->withCount('reviews');
-                $query->withAvg('reviews', 'rating');
-            })
+            ->with('products')
             ->where('slug', $slug)->first();
 
             if(!$category) {

@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('web')->group(function() {
     //categories resource
     Route::apiResource('/categories', App\Http\Controllers\Api\Web\CategoryController::class,['except' => ['create', 'store', 'edit','update', 'destroy'], 'as' => 'web']);
+
+    // products resource
+    Route::apiResource('/products', App\Http\Controllers\Api\Web\ProductController::class, ['except' => ['create', 'store', 'edit','update', 'destroy'], 'as' => 'web']);
+
+    // slider resource
+    Route::apiResource('/sliders', App\Http\Controllers\Api\Web\SliderController::class, ['except' => ['create', 'store', 'edit','update', 'destroy'], 'as' => 'web']);
 });
 
 Route::prefix('customer')->group(function() {
