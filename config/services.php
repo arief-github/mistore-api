@@ -29,5 +29,18 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    //midtrans
+    'midtrans' => [
+        //midtrans server key
+        'serverKey' => env('MIDTRANS_SERVERKEY'),
+        //midtrans client key
+        'clientKey' => env('MIDTRANS_CLIENTKEY'),
+        'isProduction'  => env('MIDTRANS_IS_PRODUCTION', false),
+        'isSanitized'   => env('MIDTRANS_IS_SANITIZED', true),
+        'is3ds'         => env('MIDTRANS_IS_3DS', true),
+    ],
+    //raja ongkir
+    'rajaongkir' => [
+        'key' => env('RAJAONGKIR_APIKEY')
+    ]
 ];

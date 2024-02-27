@@ -23,6 +23,24 @@ Route::prefix('web')->group(function() {
 
     // slider resource
     Route::apiResource('/sliders', App\Http\Controllers\Api\Web\SliderController::class, ['except' => ['create', 'store', 'edit','update', 'destroy'], 'as' => 'web']);
+
+    // carts
+    Route::get('/carts', [App\Http\Controllers\Api\Web\CartController::class, 'index', ['as' => 'web']]);
+    Route::post('/carts', [App\Http\Controllers\Api\Web\CartController::class, 'store', ['as' => 'web']]);
+    Route::get('/carts/total_price', [App\Http\Controllers\Api\Web\CartController::class, 'getCartPrice', ['as' => 'web']]);
+    Route::get('/carts/total_weight', [App\Http\Controllers\Api\Web\CartController::class, 'getCartWeight', ['as' => 'web']]);
+    Route::post('/carts/remove', [App\Http\Controllers\Api\Web\CartController::class, 'removeCart', ['as' => 'web']]);
+
+    // Raja Ongkir : Check City, Province and Ongkos Kirim
+    Route::get('/rajaongkir/provinces', [App\Http\Controllers\Api\Web\RajaOngkirController::class, 'getProvinces', ['as' => 'web']]);
+    Route::post('/rajaongkir/city', [App\Http\Controllers\Api\Web\RajaOngkirController::class, 'getCities', ['as' => 'web']]);
+    Route::post('/rajaongkir/cekOngkir', [App\Http\Controllers\Api\Web\RajaOngkirController::class, 'checkOngkir', ['as' => 'web']]);
+
+    // checkout
+    Route::post('/checkout', [App\Http\Controllers\Api\Web\CheckoutController::class, 'store', ['as' => 'web']]);
+
+    // notifications
+    Route::post('/notification', [App\Http\Controllers\Api\Web\NotificationHandlerController::class, 'index', ['as' => 'web']]);
 });
 
 Route::prefix('customer')->group(function() {
@@ -45,6 +63,12 @@ Route::prefix('customer')->group(function() {
 
         // Dashboard
         Route::get('/dashboard', [App\Http\Controllers\Api\Customer\DashboardController::class, 'index', ['as' => 'customer']]);
+
+        // Review
+        Route::post('/reviews', [App\Http\Controllers\Api\Customer\ReviewController::class, 'store', ['as' => 'customer']]);
+
+        // Invoices
+        Route::apiResource('/invoices', App\Http\Controllers\Api\Customer\InvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'customer']);
     });
 });
 
