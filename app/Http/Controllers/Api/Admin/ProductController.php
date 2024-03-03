@@ -18,11 +18,17 @@ class ProductController extends Controller
 
     public function index()
     {
-        // get all products
-        $products = Product::with('category')->when(request()->q, function($products) {
-           $products = $products->where('title', 'like', '%'.request()->q. '%');
-        })->latest()->paginate(5);
-        // return with API resource
+        //get products
+        $products = Product::with('category')
+            //count and average
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
+            //search
+            ->when(request()->q, function($products) {
+                $products = $products->where('title', 'like', '%'. request()->q . '%');
+            })->latest()->paginate(8);
+
+        //return with Api Resource
         return new ProductResource(true, 'List Data Products', $products);
     }
 

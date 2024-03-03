@@ -21,14 +21,11 @@ class CreateReviewsTable extends Migration
             $table->integer('rating');
             $table->text('review');
             $table->timestamps();
-
-            // Relationship Product
+            //relationship product
             $table->foreign('product_id')->references('id')->on('products');
-
-            // Relationship Order
+            //relationship order
             $table->foreign('order_id')->references('id')->on('orders');
-
-            // Relationship Customer
+            //relationship customer
             $table->foreign('customer_id')->references('id')->on('customers');
         });
     }

@@ -90,7 +90,7 @@ class CartController extends Controller
      */
     public function getCartWeight()
     {
-        $totalWeight = Cart::with('product')->where('customer_id', auth()->guard('api_customer')->user()->id)->sum('price');
+        $totalWeight = Cart::with('product')->where('customer_id', auth()->guard('api_customer')->user()->id)->sum('weight');
 
         // return with Api Resource
         return new CartResource(true, 'Total Berat Bersih', $totalWeight);

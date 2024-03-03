@@ -17,9 +17,13 @@ class ProductController extends Controller
     {
         // get products
         $products = Product::with('category')
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->when(request()->q, function($products) {
-                $products = $products->where('title', 'like', '%'. request()->q . '%');
+                $products = $products->where('title', 'like', '%'.
+                    request()->q . '%');
             })->latest()->paginate(8);
+
 
         // return with API resource
         return new ProductResource(true, 'List Data Products', $products);
