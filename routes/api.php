@@ -103,5 +103,9 @@ Route::prefix("admin")->group(function () {
 
         // read customers
         Route::get('/customers', [App\Http\Controllers\Api\Admin\CustomerController::class, 'index', ['as' => 'admin']]);
+
+        //invoices resource
+        Route::apiResource('/invoices', App\Http\Controllers\Api\Admin\InvoiceController::class, ['except' => ['create', 'store', 'edit', 'update', 'destroy'], 'as' => 'admin']);
+
     });
 });
